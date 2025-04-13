@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_production_form_inherit_qty_producing" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.qty.producing</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_producing']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'done', 'confirmed', 'in_progress'] or (state == 'done' and is_locked)</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
