@@ -19,7 +19,7 @@ class PurchaseOrder(models.Model):
             'currency_id': supplier.property_purchase_currency_id.id,
             'origin': origin,
             'date_order': fields.Datetime.now(),
-            'category_id': category,  # custom field
+            'category_id': category, 
         }
 
 class StockRuleInherit(models.Model):
