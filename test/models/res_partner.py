@@ -1,25 +1,19 @@
-from odoo import models, api
+from odoo import models, api,fields
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
-        args = args or []
-        if name:
-            partners = self.search(['|', ('name', operator, name), ('ref', operator, name)] + args, limit=limit)
-        else:
-            partners = self.search(args, limit=limit)
-        return partners.name_get()
+    display_name = fields.Char(compute='_compute_display_name', store=True)
 
-    def name_get(self):
-        result = []
-        for partner in self:
-            name = partner.name
-            if partner.ref:
-                name += f" [{partner.ref}]"
-            result.append((partner.id, name))
-        return result
+    @api.depends('name', 'ref')
+    def _compute_display_name(self):
+        for rec in self:
+            if rec.ref:
+                rec.display_name = f"{rec.name} [{rec.ref}]"
+            else:
+                rec.display_name = rec.name
+
+  
     
 
     
